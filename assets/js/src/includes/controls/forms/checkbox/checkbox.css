@@ -1,0 +1,7 @@
+.wpformbuilder-checkbox-item .wpformbuilder-checkbox-item__input input{
+    outline: none;
+}
+.wpformbuilder-checkbox-item{
+    display: flex;
+    align-items: center;
+}

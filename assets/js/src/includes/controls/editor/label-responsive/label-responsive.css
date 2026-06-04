@@ -1,0 +1,33 @@
+.components-toggle-group-control.wpformbuilder-toggle-unit-options{
+    min-height: 20px;
+}
+.components-toggle-group-control.wpformbuilder-toggle-unit-options:focus-within{
+    border-color: #949494;
+    box-shadow: none;
+}
+.wpformbuilder-toggle-unit-options .wpformbuilder-toggle-unit{
+    padding: 0;
+}
+.wpformbuilder-toggle-unit>div{
+    font-size: 8px;
+}
+.wpformbuilder-dropdow-responsive button{
+    border: 0 !important;
+    min-width: auto !important;
+    padding-top: 6px;
+    padding-left: 0px;
+    margin-left: -7px;
+}
+.wpformbuilder-dropdow-responsive button svg{
+    width: 20px;
+}
+.wpformbuilder-flex-block-no-margin div{
+    margin-bottom: 0px !important;
+}
+.dropdow-selected{
+    color: red !important;
+}
+.wpformbuilder-dropdow-responsive button:focus{
+    border: none !important;
+    box-shadow: none !important;
+}

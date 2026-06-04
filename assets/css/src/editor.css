@@ -1,0 +1,203 @@
+.wpformbuilder-custom-attribute-control .wpformbuilder-custom-attribute-panel{
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.wpformbuilder-custom-attribute-control .wpformbuilder-custom-attribute-panel button, .wpformbuilder-custom-attribute-control .wpformbuilder-custom-attribute-panel button:focus{
+    outline: none;
+    box-shadow: none;
+}
+.wpformbuilder-custom-attribute-panel.is-opened button{
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+.wpformbuilder-custom-attribute-panel button svg.fa-xmark{
+    position: absolute;
+    right: 2px;
+    background: #ff3838;
+    margin: 0;
+    color: #fff;
+    width: 15px;
+    top: 1px;
+    height: 15px;
+}
+.wpformbuilder-custom-attribute-control__item{
+    margin-top: 15px;
+}
+.wpformbuilder-custom-attribute-control__item label, .wpformbuilder-buttons-select>div>label, .wpformbuilder-form-name label, .wpformbuilder-form-label-settings label, .wpformbuilder-input-size-select label, .wpformbuilder-action-section label, .wpformbuilder-text-capitalize label, span.wpformbuilder-mailchimp-list-id{
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    text-transform: capitalize !important;
+}
+.wpformbuilder-add-attribute-button{
+    border: 1px solid #ccc;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.wpformbuilder-add-attribute-button svg{
+    width: 24px;
+}
+.wpformbuilder-form-control__label{
+    font-weight: 400;
+}
+.wpformbuilder-tab-repeater>div{
+    margin-bottom: 10px;
+}
+.wpformbuilder-tab-repeater button{
+    border: 1px solid #ccc;
+    height: 30px !important;
+    font-size: 12px;
+    font-weight: 400;
+    width: 52%;
+    border-radius: 2px;
+    display: block;
+}
+.wpformbuilder-tab-repeater button:nth-child(1){
+    border-radius: 2px 0px 0px 2px;
+    border-right: 0px;
+}
+.wpformbuilder-tab-repeater button:nth-child(2){
+    border-radius: 0px 2px 2px 0px;
+    border-left: 0px;
+}
+.wpformbuilder-tab-repeater button.active-tab{
+    background-color: #3f444b;
+    color: #fff !important;
+    transition: all .3s;
+}
+.wpformbuilder-form-label-settings .components-flex{
+    flex-direction: row;
+    align-items: center;
+}
+.wpformbuilder-form-label-settings .components-flex-item{
+    width: 40%;
+}
+button.wpformbuilder-tab-setting, button.wpformbuilder-tab-style{
+    width: 50%;
+    justify-content: center;
+    transition: all .3s;
+    font-weight: 600;
+}
+button.wpformbuilder-tab-setting.active-tab, button.wpformbuilder-tab-style.active-tab{
+    background-color: #007cba;
+    color: #fff;
+}
+button.wpformbuilder-tab-setting.active-tab:hover, button.wpformbuilder-tab-style.active-tab:hover{
+    color: #fff;
+}
+.wpformbuilder-tab-panel>.components-tab-panel__tabs{
+    border: 1px solid #dedede;
+}
+.wpformbuilder-no-margin-bootom>div{
+    margin-bottom: -2px !important;
+}
+.wpformbuilder-button-toggle-position-option{
+    border-right: 1px solid #8f8f8f !important;
+}
+.wpformbuilder-button-toggle-position-option[aria-pressed="true"]{
+    background-color: #000;
+    color: #fff;
+}
+.wpformbuilder-button-toggle-position-option[aria-pressed="false"]{
+    background-color: #fff;
+    color: #000;
+}
+.wpformbuilder-button-toggle-position-option.no-border-right{
+    border-right: none !important;
+}
+.wpformbuilder-button-options{
+    border: 1px solid #8f8f8f !important;
+}
+.wpformbuilder-button-toggle-position-option:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+.wpformbuilder-tab-panel-button-style>div.components-tab-panel__tabs{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wpformbuilder-tab-panel-button-style .wpformbuilder-tab-button-normal, .wpformbuilder-tab-panel-button-style .wpformbuilder-tab-button-hover{
+    width: 50%;
+    display: block;
+    text-align: center;
+    height: 30px !important;
+}
+.wpformbuilder-tab-button-normal.active-tab, .wpformbuilder-tab-button-hover.active-tab{
+    color: #fff;
+    background-color: #3f444b;
+}
+.wpformbuilder-tab-button-normal.active-tab:hover, .wpformbuilder-tab-button-hover.active-tab:hover{
+    color: #fff;
+}
+.wpformbuilder-action-submit label{
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.wpformbuilder-width-35 .components-flex-item {
+    width: 35%;
+}
+.wpformbuilder-width-33 .components-flex-item {
+    width: 33%;
+}
+.wpformbuilder-width-70 .components-flex-item {
+    width: 70%;
+}
+.wpformbuilder-options-fieldset{
+    border: 1px solid #ccc !important;
+    padding-block: 0.35em 0.625em !important;
+    padding-inline: 0.75em !important;
+}
+.wpformbuilder-heigth-25 input{
+    height: 25px !important;
+    min-height: 25px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.wpformbuilder-add-options-button>svg{
+    width: 13px !important;
+}
+.wpformbuilder-add-options-button{
+    border-left: 1px solid #ccc !important;
+    display: flex !important;
+    align-items: center;
+    margin: 0 auto !important;
+    font-size: 10px !important;
+    margin-top: 8px !important;
+    height: 25px !important;
+}
+.wpformbuilder-group-mailchimp{
+    margin-bottom: 15px;
+}
+.wpformbuilder-reload-api-data:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+.wpformbuilder-button-upgrade{
+    text-decoration: none !important;
+    color: #ff6600 !important;
+    outline: none !important;
+    font-weight: 500;
+    transition: all .3s;
+}
+.wpformbuilder-button-upgrade:hover{
+    color: #ff6600 !important;
+}
+.wpformbuilder-button-upgrade:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+.wpformbuilder-panel-toggle button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.wpformbuilder-panel-toggle button[aria-expanded="true"] {
+    background-color: #f0f0f0;
+}
+.wpformbuilder-panel-toggle .components-panel__body-title button{
+    font-weight: 500;
+}
+.wpformbuilder-button-upgrade{
+    display: none;
+}

@@ -1,0 +1,100 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+.wpformbuilder-button-icon {
+    box-shadow: none !important;
+    border: 1px solid #007cba;
+    transition: all .3s;
+}
+
+.wpformbuilder-button-icon:nth-child(1),
+.wpformbuilder-button-icon:nth-child(2) {
+    border-right: none !important;
+}
+
+.wpformbuilder-button-icon.wpf-active {
+    background-color: #007cba !important;
+    color: #fff !important;
+}
+
+/* Modal icon */
+.wpf-icon-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 110px);
+    gap: 10px;
+    overflow: auto;
+    grid-auto-rows: 60px;
+}
+
+.wpf-icon-item {
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 8px;
+    cursor: pointer;
+    width: 95%;
+    height: 95%;
+}
+
+.wpf-icon-item:hover {
+    background: #f0f0f0;
+}
+
+.wpf-icon-item i {
+    font-size: 18px;
+}
+
+.wpformbuilder-panel-icon {
+    transition: all .3s;
+    border-left: 3px solid transparent;
+}
+
+.wpformbuilder-panel-icon.is-active:hover {
+    color: #fff !important;
+}
+
+.wpformbuilder-panel-icon.is-active {
+    color: #fff;
+    background-color: #007cbabf;
+    border-left: 3px solid #007cba;
+}
+
+.wpformbuilder-panel-icon::after {
+    content: none;
+}
+
+button.wpf-icon-item.wpf-active,
+.wpformbuilder-button-toggle-icon-position[aria-checked="true"] {
+    background-color: #007cba;
+    color: #fff;
+}
+
+.wpf-icon-item .icon-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin-top: 5px;
+}
+
+.wpformbuilder-button-options::before {
+    content: none !important;
+}
+
+.wpf-icon-content>i {
+    font-size: 24px;
+}
+
+/* sticky modal */
+.wpf-icon-modal .components-modal__content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    /* margin-top: 50px; */
+    overflow: hidden;
+}
+
+.wpf-icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+}

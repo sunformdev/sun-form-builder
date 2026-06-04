@@ -1,0 +1,4 @@
+.wpformbuilder-form-control.select>select{
+    max-width: unset;
+    width: 100%;
+}

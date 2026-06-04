@@ -1,0 +1,15 @@
+.wpformbuilder-remove-options-button{
+    padding: 0px !important;
+    margin: 0px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    border: none !important;
+    margin-left: -5px !important;
+}
+.wpformbuilder-remove-options-button svg{
+    width: 18px !important;
+    color: #ca1414 !important;
+}
+.wpformbuilder-remove-options-button svg:hover{
+    color: red !important;
+}

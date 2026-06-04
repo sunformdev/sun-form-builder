@@ -1,0 +1,7 @@
+.wpformbuilder-radio-item{
+    display: flex;
+    align-items: center;
+}
+.wpformbuilder-radio-item .wpformbuilder-radio-item__input input{
+    outline: none;
+}

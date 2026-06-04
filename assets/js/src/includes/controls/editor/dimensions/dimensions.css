@@ -1,0 +1,37 @@
+.wpformbuilder-dimensions-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wpformbuilder-dimensions-unit-options .wpformbuilder-dimensions-unit{
+    padding: 0px 5px;
+}
+.wpformbuilder-dimensions-unit-options{
+    min-height: 25px !important;
+}
+.wpformbuilder-dimensions-unit-options .wpformbuilder-dimensions-unit>div{
+    font-size: 9px;
+}
+.wpformbuilder-dimensions-control__item>div{
+    margin-bottom: 3px !important;
+}
+.wpformbuilder-dimensions-control__item .components-input-control__backdrop{
+    border-radius: 0px !important;
+}
+.wpformbuilder-dimensions-control__item.right .components-input-control__backdrop, .wpformbuilder-dimensions-control__item.left .components-input-control__backdrop{
+    border-left: none !important;
+    border-right: none !important;
+}
+button.wpformbuilder-button-dimensions-link{
+    height: 32px;
+    border-radius: 0px !important;
+    border: 1px solid #949494;
+    margin-bottom: 24px;
+}
+button.wpformbuilder-button-dimensions-link.has-link{
+    background-color: #e2c6a6;
+}
+button.wpformbuilder-button-dimensions-link:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}

@@ -1,0 +1,32 @@
+.wpformbuilder-options-group{
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+    background-color: #007cba;
+    outline: none;
+}
+.wpformbuilder-options-group:hover{
+    color: #fff !important;
+}
+.wpformbuilder-options-fieldset.select-group:not(:last-child){
+    margin-bottom: 15px !important;
+}
+.wpformbuilder-remove-group-button {
+    border:  none !important;
+    position: absolute !important;
+    top: -28px;
+    right: -11px;
+    width: auto !important;
+    min-width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+}
+.wpformbuilder-remove-group-button svg{
+    width: 22px;
+    fill: #ba2f2e;
+}
+.wpformbuilder-remove-group-button svg:hover{
+    fill: red
+}
+.wpformbuilder-options-fieldset{
+    position: relative;
+}

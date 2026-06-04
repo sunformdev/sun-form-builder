@@ -1,0 +1,89 @@
+.wpformbuilder-form-group .wpformbuilder-form-control__field:not([type="checkbox"]):not([type="radio"]){
+    width: 100%;
+    border-radius: 0;
+}
+.wpformbuilder-form__inner{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+/* .wpformbuilder-input-size-select>div{ // Input size erro
+    width: 40%;
+} */
+.wpformbuilder-form-control__field:focus{
+    outline: none;
+}
+.wpformbuilder-form-control__field{
+    box-sizing: border-box;
+    padding: 0px 8px;
+    border-width: 1px;
+}
+.wpformbuilder-form-control__field.extra-small:not([type="checkbox"]):not([type="radio"]){
+    min-height: 33px;
+}
+.wpformbuilder-form-control__field.small:not([type="checkbox"]):not([type="radio"]){
+    min-height: 40px;
+}
+.wpformbuilder-form-control__field.medium:not([type="checkbox"]):not([type="radio"]){
+    min-height: 47px;
+}
+.wpformbuilder-form-control__field.large:not([type="checkbox"]):not([type="radio"]){
+    min-height: 59px;
+}
+.wpformbuilder-form__inner .wpformbuilder-form-group label{
+    display: block;
+}
+.wpformbuilder-form__button{
+    display: flex;
+    margin-top: 15px;
+}
+.wpformbuilder-form__button .wpformbuilder-form__button--submit{
+    transition: all .3s;
+}
+.wpformbuilder-button-submit-sm{
+    min-height: 40px;
+}
+.wpformbuilder-button-submit-md{
+    min-height: 47px;
+}
+.wpformbuilder-button-submit-lg{
+    min-height: 59px;
+}
+.wpformbuilder-button-submit-xl{ 
+    min-height: 72px;
+}
+.wpformbuilder-form__button--submit{
+    background-color: #04AA6D;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+}
+.wpformbuilder-message__submit{
+    font-size: 16px;
+    margin-top: 10px;
+}
+.wpformbuilder-message__submit.error{
+    color: #f51919;
+}
+.wpformbuilder-message__submit.success{
+    color: #000000;
+}
+/* Overlay Form */
+.wpformbuilder-form {
+    position: relative;
+}
+
+.wpformbuilder-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6); /* độ mờ */
+    z-index: 999;
+    pointer-events: all; /* chặn click */
+}
+.wpformbuilder-form__button--submit__content{
+    display: inline-flex;
+    align-items: center;
+}

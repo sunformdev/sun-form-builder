@@ -1,0 +1,11 @@
+.wpformbuilder-typography-select>.components-flex-item{
+    width: 45%;
+}
+.wpformbuilder-typography-select>.components-flex-item>label{
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    text-transform: capitalize !important;
+}
+.wpformbuilder-dropdown-content label{
+    color: #000;
+}

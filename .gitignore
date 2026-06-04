@@ -1,0 +1,9 @@
+.idea/
+node_modules/
+dist/
+assets/css/minify/
+assets/js/minify/
+.vscode
+*.zip
+package-lock.json
+package-lock.json
