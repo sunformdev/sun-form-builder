@@ -7,6 +7,7 @@ Requires PHP: 7.0
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Development Repository: https://github.com/sunformdev/sun-form-builder
 
 Powerful WordPress form builder built on the Gutenberg block editor, with reusable email templates and Mailchimp integration.
 
