@@ -19,7 +19,7 @@ class SUNFORM_Integration_Manager
         if (!current_user_can('manage_options')) {
             return new WP_Error(
                 'rest_forbidden',
-                __('You are not allowed to access this endpoint.', 'sun-form-builder'),
+                __('You are not allowed to access this endpoint.', 'sunformbuilder'),
                 ['status' => rest_authorization_required_code()]
             );
         }

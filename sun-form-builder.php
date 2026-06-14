@@ -6,7 +6,7 @@
  * Version:     1.0.0
  * Author:      Sun Form Builder Team
  * License: GPLv2 or later
- * Text Domain: sun-form-builder
+ * Text Domain: sunformbuilder
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
@@ -34,10 +34,10 @@ class Sun_Form_Builder
         add_action('init', [$this, 'SUNFORM_load_plugin']);
         $upload = wp_upload_dir();
         $upload_dir = $upload['basedir'];
-        $upload_dir = $upload_dir . '/sun-form-builder';
+        $upload_dir = $upload_dir . '/sunformbuilder';
 
         define('SUN_FORM_BUILDER_CSS_DIR', $upload_dir . '/css');
-        define('SUN_FORM_BUILDER_CSS_URL', $upload['baseurl'] . '/sun-form-builder/css');
+        define('SUN_FORM_BUILDER_CSS_URL', $upload['baseurl'] . '/sunformbuilder/css');
 
         add_action('init', [$this, 'SUNFORM_register_post_type']);
         add_action('init', [$this, 'SUNFORM_register_email_template_post_type'], 10);
@@ -116,7 +116,7 @@ class Sun_Form_Builder
 
         $upload = wp_upload_dir();
         $upload_dir = $upload['basedir'];
-        $upload_dir = $upload_dir . '/sun-form-builder';
+        $upload_dir = $upload_dir . '/sunformbuilder';
 
         global $wp_filesystem;
         if (empty($wp_filesystem)) {
@@ -141,8 +141,8 @@ class Sun_Form_Builder
         return array_merge(
             [
                 [
-                    'slug' => 'sun-form-builder',
-                    'title' => __('WP Form Builder', 'sun-form-builder'),
+                    'slug' => 'sunformbuilder',
+                    'title' => __('WP Form Builder', 'sunformbuilder'),
                 ],
             ],
             $categories
@@ -151,14 +151,14 @@ class Sun_Form_Builder
     public function SUNFORM_block_script_register()
     {
         wp_enqueue_script(
-            'sun-form-builder-blocks-js',
+            'sunformbuilder-blocks-js',
             plugins_url('assets/js/minify/form.min.js', __FILE__),
             ['wp-blocks', 'wp-element', 'wp-editor'],
             SUN_FORM_BUILDER_VERSION
         );
 
         wp_localize_script(
-            'sun-form-builder-blocks-js',
+            'sunformbuilder-blocks-js',
             'sun_data',
             $this->sun_js_data
         );
@@ -176,7 +176,7 @@ class Sun_Form_Builder
         }
 
         wp_enqueue_style(
-            'sun-form-builder-form-style',
+            'sunformbuilder-form-style',
             plugins_url('assets/css/minify/form.min.css', __FILE__),
             [],
             SUN_FORM_BUILDER_VERSION
@@ -234,7 +234,7 @@ class Sun_Form_Builder
     public function SUNFORM_gurenberg_editor()
     {
         wp_enqueue_style(
-            'sun-form-builder-gutenberg-editor',
+            'sunformbuilder-gutenberg-editor',
             plugins_url('assets/css/minify/editor.min.css', __FILE__),
             [],
             SUN_FORM_BUILDER_VERSION
@@ -321,16 +321,16 @@ class Sun_Form_Builder
             'sun_forms',
             [
                 'labels' => array(
-                    'name' => __('All Forms', 'sun-form-builder'),
-                    'singular_name' => __('All Forms', 'sun-form-builder'),
-                    'add_new_item' => __('Add New Form', 'sun-form-builder'),
+                    'name' => __('All Forms', 'sunformbuilder'),
+                    'singular_name' => __('All Forms', 'sunformbuilder'),
+                    'add_new_item' => __('Add New Form', 'sunformbuilder'),
                 ),
                 'public' => true,
                 'has_archive' => true,
                 'show_in_rest' => true,
                 'show_in_menu' => false,
                 'publicly_queryable' => true,
-                'rewrite' => array('slug' => 'sun_forms'),
+                'rewrite' => array('slug' => 'sun-forms'),
                 'supports' => array(
                     'title',
                     'editor'
@@ -345,9 +345,9 @@ class Sun_Form_Builder
             'sun_email_template',
             [
                 'labels' => array(
-                    'name' => __('Email Template', 'sun-form-builder'),
-                    'singular_name' => __('Email Template', 'sun-form-builder'),
-                    'add_new_item' => __('Add New Template', 'sun-form-builder'),
+                    'name' => __('Email Template', 'sunformbuilder'),
+                    'singular_name' => __('Email Template', 'sunformbuilder'),
+                    'add_new_item' => __('Add New Template', 'sunformbuilder'),
                 ),
                 'public' => true,
                 'has_archive' => true,
@@ -362,13 +362,13 @@ class Sun_Form_Builder
 
     public function SUNFORM_email_template_metabox()
     {
-        add_meta_box('sun-form-builder-email-template', 'Template', [$this, 'SUNFORM_email_metabox_html'], 'sun_email_template');
+        add_meta_box('sunformbuilder-email-template', 'Template', [$this, 'SUNFORM_email_metabox_html'], 'sun_email_template');
     }
     public function SUNFORM_email_metabox_html($post)
     {
         $template = get_post_meta($post->ID, '_sun_email_template', true);
 ?>
-        <textarea id="wpformbuilder-email-editor" name="email_template"
+        <textarea id="sunformbuilder-email-editor" name="email_template"
             style="display:none;"><?php echo esc_textarea($template); ?></textarea>
         <?php
     }
@@ -438,16 +438,16 @@ class Sun_Form_Builder
 
     public function SUNFORM_set_custom_edit_columns($columns)
     {
-        $columns['sun-form-shortcode'] = __('Shortcode', 'sun-form-builder');
+        $columns['sunform-shortcode'] = __('Shortcode', 'sunformbuilder');
         return $columns;
     }
     public function SUNFORM_custom_column($column, $post_id)
     {
         switch ($column) {
-            case 'sun-form-shortcode':
+            case 'sunform-shortcode':
                 $shortcode = sprintf('[sun_form id=%d]', $post_id);
         ?>
-                <input class="sun-widget-shortcode-input" type="text" readonly onfocus="this.select()"
+                <input class="sunform-widget-shortcode-input" type="text" readonly onfocus="this.select()"
                     value="<?php echo esc_attr($shortcode); ?>" />
 <?php
                 break;

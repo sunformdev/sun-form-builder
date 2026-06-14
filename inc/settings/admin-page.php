@@ -46,7 +46,7 @@ class SUNFORM_Settings
                 </button>
                 <button type="button" class="wpformbuilder-api-change">Change</button>
                 <button type="button" class="wpformbuilder-api-cancel" style="display:none;">Cancel</button>
-                <div class="wpformbuilder-notification-save-settings"><?php esc_html_e('Settings Saved.', 'sun-form-builder'); ?>
+                <div class="wpformbuilder-notification-save-settings"><?php esc_html_e('Settings Saved.', 'sunformbuilder'); ?>
                 </div>
             </div>
             <?php
@@ -57,7 +57,7 @@ class SUNFORM_Settings
                 <img class="wpformbuilder-loading-icon-save-options" src="<?php echo esc_url($loading_icon); ?>"
                     alt="Loading" />Save
             </button>
-            <div class="wpformbuilder-notification-save-settings"><?php esc_html_e('Settings Saved.', 'sun-form-builder'); ?></div>
+            <div class="wpformbuilder-notification-save-settings"><?php esc_html_e('Settings Saved.', 'sunformbuilder'); ?></div>
             <?php
         }
 
@@ -90,7 +90,7 @@ $sunform_admin_setting = new SUNFORM_Settings();
         if (isset($_GET['settings-updated'])) { ?>
             <div id="message" class="updated">
                 <p><strong>
-                        <?php esc_html_e('Settings saved.', 'sun-form-builder') ?>
+                        <?php esc_html_e('Settings saved.', 'sunformbuilder') ?>
                     </strong></p>
             </div>
         <?php } ?>
