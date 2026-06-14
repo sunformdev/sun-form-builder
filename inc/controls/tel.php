@@ -34,7 +34,7 @@ class SUNFORM_Tel_Control extends SUNFORM_Base_Control
 
         return "
             <div " . $this->get_render_attributes($group_attributes) . ">
-                <label " . $this->get_render_attributes($label_attributes) . ">$label</label>
+                <label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>
                 <div class='wpformbuilder-form-control tel'>
                     <input " . $this->get_render_attributes($tel_attributes) . ">
                 </div>

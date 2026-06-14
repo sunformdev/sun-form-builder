@@ -31,7 +31,7 @@ class SUNFORM_Radio_Control extends SUNFORM_Base_Control
 
         return "
             <div " . $this->get_render_attributes($group_attributes) . ">
-                <label " . $this->get_render_attributes($label_attributes) . ">$label</label>
+                <label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>
                 <div class='wpformbuilder-form-control radio'>
                     " . $this->render_radio_items($radios, $default_value, $radio_attributes) . "
                 </div>
