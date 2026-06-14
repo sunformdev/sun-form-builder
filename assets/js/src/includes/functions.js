@@ -363,7 +363,7 @@ wp.domReady(function () {
             const blocks = currentEditor.getBlocks();
             //console.log('sun_data: ', blocks); // Đang ở đây làm tải css vs js nữa
             blocks.forEach(block => {
-                if (block.name.includes('sun-formbuilder')) {
+                if (block.name.includes('sunformbuilder/form')) {
                     // console.log('block===> ', block);
                     css += getCssBlock(block);
                 }

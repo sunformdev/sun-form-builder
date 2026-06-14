@@ -176,7 +176,7 @@ class Sun_Form_Builder
         }
 
         wp_enqueue_style(
-            'sunformbuilder-form-style',
+            'sunformbuilder-style',
             plugins_url('assets/css/minify/form.min.css', __FILE__),
             [],
             SUN_FORM_BUILDER_VERSION
@@ -202,17 +202,17 @@ class Sun_Form_Builder
         $content = apply_filters('the_content', $post_form->post_content);
 
         wp_register_style(
-            'sun-form-style',
+            'sunformbuilder-style',
             plugins_url('assets/css/minify/form.min.css', __FILE__),
             [],
             SUN_FORM_BUILDER_VERSION
         );
-        wp_enqueue_style('sun-form-style');
-        $handles = ['sun-form-style'];
+        wp_enqueue_style('sunformbuilder-style');
+        $handles = ['sunformbuilder-style'];
 
         $css_file = SUN_FORM_BUILDER_CSS_DIR . '/' . $atts['id'] . '.css';
         if (file_exists($css_file)) {
-            $handle_custom = 'sun-form-style-' . $atts['id'];
+            $handle_custom = 'sunformbuilder-style-' . $atts['id'];
             wp_register_style(
                 $handle_custom,
                 SUN_FORM_BUILDER_CSS_URL . '/' . $atts['id'] . '.css',
@@ -251,16 +251,16 @@ class Sun_Form_Builder
     public function SUNFORM_block_conditional_assets()
     {
         global $post;
-        if (!is_admin() && has_block('sun-formbuilder/form') ||  !empty($post) && (has_shortcode($post->post_content, 'sun_form'))) {
+        if (!is_admin() && has_block('sunformbuilder/form') ||  !empty($post) && (has_shortcode($post->post_content, 'sun_form'))) {
             $post_content = $post->post_content;
             wp_enqueue_script(
-                'sun-submit-js',
+                'sunformbuilder-submit-js',
                 plugins_url('assets/js/minify/submit.min.js', __FILE__),
                 ['jquery'],
                 SUN_FORM_BUILDER_VERSION
             );
             wp_localize_script(
-                'sun-submit-js',
+                'sunformbuilder-submit-js',
                 'sun_data',
                 $this->sun_js_data
             );
@@ -274,14 +274,14 @@ class Sun_Form_Builder
                 }
             }
 
-            if (!is_admin() && has_block('sun-formbuilder/form')) {
+            if (!is_admin() && has_block('sunformbuilder/form')) {
                 $id = $post->ID;
             }
 
             if (isset($id)) {
                 $version = file_exists(SUN_FORM_BUILDER_CSS_DIR . '/' . $id . '.css') ? filemtime(SUN_FORM_BUILDER_CSS_DIR . '/' . $id . '.css') : time();
                 wp_enqueue_style(
-                    'sunform-form-style-' . $id,
+                    'sunformbuilder-style-' . $id,
                     SUN_FORM_BUILDER_CSS_URL . '/' . $id . '.css',
                     [],
                     $version
@@ -300,7 +300,7 @@ class Sun_Form_Builder
             'dashicons-feedback'
         );
         add_submenu_page('edit.php?post_type=sun_forms', 'All Form', 'All Form', 'manage_options', 'edit.php?post_type=sun_forms');
-        add_submenu_page('edit.php?post_type=sun_forms', 'Email Templates', 'Email Templates', 'manage_options', 'edit.php?post_type=sun_email_template');
+        add_submenu_page('edit.php?post_type=sun_forms', 'Email Templates', 'Email Templates', 'manage_options', 'edit.php?post_type=sun_email_templates');
         add_submenu_page('edit.php?post_type=sun_forms', 'Settings', 'Settings', 'manage_options', 'sun_settings', [$this, 'get_admin_page']);
     }
 
@@ -311,9 +311,9 @@ class Sun_Form_Builder
 
     public function SUNFORM_admin_script()
     {
-        wp_enqueue_style('sun-admin-style', plugin_dir_url(__FILE__) . 'assets/css/minify/admin.min.css');
-        wp_enqueue_script('sun-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SUN_FORM_BUILDER_VERSION);
-        wp_localize_script('sun-admin', 'sun_js_data', $this->sun_js_data);
+        wp_enqueue_style('sunformbuilder-admin-style', plugin_dir_url(__FILE__) . 'assets/css/minify/admin.min.css');
+        wp_enqueue_script('sunformbuilder-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SUN_FORM_BUILDER_VERSION);
+        wp_localize_script('sunformbuilder-admin', 'sun_js_data', $this->sun_js_data);
     }
     public function SUNFORM_register_post_type()
     {
@@ -342,7 +342,7 @@ class Sun_Form_Builder
     public function SUNFORM_register_email_template_post_type()
     {
         register_post_type(
-            'sun_email_template',
+            'sun_email_templates',
             [
                 'labels' => array(
                     'name' => __('Email Template', 'sunformbuilder'),
@@ -362,7 +362,7 @@ class Sun_Form_Builder
 
     public function SUNFORM_email_template_metabox()
     {
-        add_meta_box('sunformbuilder-email-template', 'Template', [$this, 'SUNFORM_email_metabox_html'], 'sun_email_template');
+        add_meta_box('sunformbuilder-email-template', 'Template', [$this, 'SUNFORM_email_metabox_html'], 'sun_email_templates');
     }
     public function SUNFORM_email_metabox_html($post)
     {
@@ -376,7 +376,7 @@ class Sun_Form_Builder
     public function SUNFORM_codemirror_enqueue_scripts($hook)
     {
         global $post;
-        if (!empty($post->post_type) && $post->post_type == 'sun_email_template') {
+        if (!empty($post->post_type) && $post->post_type == 'sun_email_templates') {
             $sunform_settings['codeEditor'] = wp_enqueue_code_editor(array('type' => 'htmlmixed'));
             wp_localize_script('jquery', 'sunform_settings', $sunform_settings);
             wp_enqueue_script('wp-theme-plugin-editor');
@@ -387,7 +387,7 @@ class Sun_Form_Builder
     public function SUNFORM_insert_email_template()
     {
         $args = [
-            'post_type'      => 'sun_email_template',
+            'post_type'      => 'sun_email_templates',
             'posts_per_page' => -1,
             'post_status'    => 'publish',
         ];
@@ -400,7 +400,7 @@ class Sun_Form_Builder
             $email_template_default = [
                 'post_title' => 'Default Email Template',
                 'post_status' => 'publish',
-                'post_type' => 'sun_email_template',
+                'post_type' => 'sun_email_templates',
             ];
             $email_template_id = wp_insert_post($email_template_default);
             update_post_meta(254896, '_sun_id_email_template_default', $email_template_id);
@@ -456,7 +456,7 @@ class Sun_Form_Builder
     public function SUNFORM_get_email_template()
     {
         $args = [
-            'post_type' => 'sun_email_template',
+            'post_type' => 'sun_email_templates',
             'post_status' => 'publish',
             'posts_per_page' => -1,
         ];
@@ -487,7 +487,7 @@ class Sun_Form_Builder
         $page          = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
         $allowed_pages = ['sun_form_submit', 'sun_settings'];
 
-        return in_array($page, $allowed_pages, true) || 'sun_email_template' === $post_type;
+        return in_array($page, $allowed_pages, true) || 'sun_email_templates' === $post_type;
     }
 }
 register_activation_hook(__FILE__, ['Sun_Form_Builder', 'activate']);

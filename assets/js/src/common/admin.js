@@ -167,7 +167,7 @@ jQuery(function ($) {
     }
 
     // Email Teamplate codeEditor
-    let emailMetabox = document.querySelector('#wpformbuilder-email-editor');
+    let emailMetabox = document.querySelector('#sunformbuilder-email-editor');
 
     if (emailMetabox) {
         let editor = wp.codeEditor.initialize(emailMetabox, {

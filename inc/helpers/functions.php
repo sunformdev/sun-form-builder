@@ -39,7 +39,7 @@ class SUNFORM_Helper
         $blocks = parse_blocks($post->post_content);
 
         foreach ($blocks as $block) {
-            if ($block['blockName'] === 'sun-formbuilder/form' && $block['attrs']['form']['id'] === $form_ID) {
+            if ($block['blockName'] === 'sunformbuilder/form' && $block['attrs']['form']['id'] === $form_ID) {
                 $block_attributes = $block['attrs'] ?? [];
                 unset($block_attributes['state'], $block_attributes['css']);
                 return $block_attributes;

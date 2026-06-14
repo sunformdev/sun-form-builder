@@ -11,10 +11,10 @@ foreach ($sunform_controls as $sunform_control) {
 }
 function sunform_register_dynamic_form_block()
 {
-    register_block_type('sun-formbuilder/form', [
+    register_block_type('sunformbuilder/form', [
         'render_callback' => 'sunform_render_form_block',
     ]);
-    wp_enqueue_style('sunform-form-style');
+    wp_enqueue_style('sunformbuilder-style');
 }
 function sunform_render_form_block($attributes)
 {

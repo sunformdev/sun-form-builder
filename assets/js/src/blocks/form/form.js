@@ -34,7 +34,7 @@ import UpgradeLabel from '../../includes/controls/editor/upgrade-label/upgrade-l
 import IconControl from '../../includes/controls/editor/icon/icon.js';
 // import '@material/web/textfield/outlined-text-field.js';
 
-wp.blocks.registerBlockType('sun-formbuilder/form', {
+wp.blocks.registerBlockType('sunformbuilder/form', {
     apiVersion: 2,
     title: __('Form'),
     icon: button,
