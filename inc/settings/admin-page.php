@@ -107,7 +107,7 @@ $sunform_admin_setting = new SUNFORM_Settings();
                             <div class="wpformbuilder-admin-api-tab wpformbuilder-admin-table"
                                 data-api-name="mailchimp">
                                 <?php
-                                $sunform_mailchimp_api_key = esc_attr(get_option('sun_mailchimp_api_key'));
+                                $sunform_mailchimp_api_key = esc_attr(get_option('sfbuilder_mailchimp_api_key'));
                                 ?>
                                 <h4 class="payment-title">Mailchimp</h4>
                                 <table class="form-table">
@@ -117,7 +117,7 @@ $sunform_admin_setting = new SUNFORM_Settings();
 
                                             <?php
                                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                            echo $sunform_admin_setting->wpformbuilder_generate_html_api_input($sunform_mailchimp_api_key, 'sun_mailchimp_api_key');
+                                            echo $sunform_admin_setting->wpformbuilder_generate_html_api_input($sunform_mailchimp_api_key, 'sfbuilder_mailchimp_api_key');
                                             ?>
                                         </td>
                                     </tr>

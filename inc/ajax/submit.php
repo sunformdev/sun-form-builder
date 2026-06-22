@@ -7,8 +7,8 @@ class SUNFORM_Ajax_Submit_Form extends SUNFORM_Helper
     public function __construct()
     {
         parent::__construct();
-        add_action('wp_ajax_sun_submit_from', [$this, 'sfbuilder_submit_from']);
-        add_action('wp_ajax_nopriv_sun_submit_from', [$this, 'sfbuilder_submit_from']);
+        add_action('wp_ajax_sfbuilder_submit_from', [$this, 'sfbuilder_submit_from']);
+        add_action('wp_ajax_nopriv_sfbuilder_submit_from', [$this, 'sfbuilder_submit_from']);
     }
 
     public function sfbuilder_submit_from()
@@ -104,7 +104,7 @@ class SUNFORM_Ajax_Submit_Form extends SUNFORM_Helper
             $data_mailchimp = [];
             $mailchimp_settings = $settings['action_submit_settings']['mailchimp'] ?? [];
             $mailchimp_api_type = $mailchimp_settings['type'] ?? 'default';
-            $mailchimp_api_key = $mailchimp_api_type ? get_option('sun_mailchimp_api_key') : $mailchimp_settings['api_key_cusom'];
+            $mailchimp_api_key = $mailchimp_api_type ? get_option('sfbuilder_mailchimp_api_key') : $mailchimp_settings['api_key_cusom'];
             $mailchimp_list_id = $mailchimp_settings['list_id_selected'] ?? '';
             $mailchimp_groups = $mailchimp_settings['groups_id_selected'] ?? [];
             $mailchimp_fields_map = $mailchimp_settings['mappings'] ?? [];
@@ -166,7 +166,7 @@ class SUNFORM_Ajax_Submit_Form extends SUNFORM_Helper
 
     public function wpformbuilder_send_response_submit(array $status, $response = false)
     {
-        $debug_mode = get_option('sun_debug_mode');
+        $debug_mode = get_option('sfbuilder_debug_mode');
         if ($status['status'] == 'error') {
             switch ($debug_mode) {
                 case '1':

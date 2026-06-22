@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
         const formID = $(this).data('form-id');
         const post_form_id = $(this).data('post-form');
 
-        formData.append('action', 'sun_submit_from');
+        formData.append('action', 'sfbuilder_submit_from');
         formData.append('formID', formID);
         formData.append('post_form_id', post_form_id);
         // formData.append('field_attribute', JSON.stringify(fieldAttributes));

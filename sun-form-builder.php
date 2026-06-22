@@ -8,14 +8,38 @@
  * License: GPLv2 or later
  * Text Domain: sunformbuilder
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Requires at least: 5.8
+ * Requires PHP: 8.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if (class_exists('Sun_Form_Builder_Pro')) {
+if (class_exists('SFBUILDER_Pro')) {
     return;
 }
-define('SUN_FORM_BUILDER_VERSION', '1.0.0');
+
+if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+    add_action('admin_notices', function () {
+        $message = sprintf(
+            /* translators: 1: required PHP version, 2: current PHP version */
+            esc_html__('Sun Form Builder requires PHP %1$s or higher. You are running PHP %2$s. The plugin has been deactivated.', 'sunformbuilder'),
+            '8.1',
+            PHP_VERSION
+        );
+        echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
+    });
+    add_action('admin_init', function () {
+        if (is_plugin_active(plugin_basename(__FILE__))) {
+            deactivate_plugins(plugin_basename(__FILE__));
+            if (isset($_GET['activate'])) {
+                unset($_GET['activate']);
+            }
+        }
+    });
+    return;
+}
+
+define('SFBUILDER_VERSION', '1.0.0');
 
 class Sun_Form_Builder
 {
@@ -36,8 +60,8 @@ class Sun_Form_Builder
         $upload_dir = $upload['basedir'];
         $upload_dir = $upload_dir . '/sunformbuilder';
 
-        define('SUN_FORM_BUILDER_CSS_DIR', $upload_dir . '/css');
-        define('SUN_FORM_BUILDER_CSS_URL', $upload['baseurl'] . '/sunformbuilder/css');
+        define('SFBUILDER_CSS_DIR', $upload_dir . '/css'); 
+        define('SFBUILDER_CSS_URL', $upload['baseurl'] . '/sunformbuilder/css');
 
         add_action('init', [$this, 'SUNFORM_register_post_type']);
         add_action('init', [$this, 'SUNFORM_register_email_template_post_type'], 10);
@@ -112,7 +136,7 @@ class Sun_Form_Builder
         $this->sfbuilder_js_data['nonce'] = wp_create_nonce('sun_post_nonce');
         $this->sfbuilder_js_data['email_templates'] = $this->SUNFORM_get_email_template();
         $this->sfbuilder_js_data['email_templates_default'] = get_post_meta(254896, '_sun_id_email_template_default', true);
-        $this->sfbuilder_js_data['api']['mailchimp'] = !empty(get_option('sun_mailchimp_api_key')) ? true : false;
+        $this->sfbuilder_js_data['api']['mailchimp'] = !empty(get_option('sfbuilder_mailchimp_api_key')) ? true : false;
 
         $upload = wp_upload_dir();
         $upload_dir = $upload['basedir'];
@@ -154,7 +178,7 @@ class Sun_Form_Builder
             'sunformbuilder-blocks-js',
             plugins_url('assets/js/minify/form.min.js', __FILE__),
             ['wp-blocks', 'wp-element', 'wp-editor'],
-            SUN_FORM_BUILDER_VERSION
+            SFBUILDER_VERSION
         );
 
         wp_localize_script(
@@ -179,7 +203,7 @@ class Sun_Form_Builder
             'sunformbuilder-style',
             plugins_url('assets/css/minify/form.min.css', __FILE__),
             [],
-            SUN_FORM_BUILDER_VERSION
+            SFBUILDER_VERSION
         );
     }
 
@@ -205,17 +229,17 @@ class Sun_Form_Builder
             'sunformbuilder-style',
             plugins_url('assets/css/minify/form.min.css', __FILE__),
             [],
-            SUN_FORM_BUILDER_VERSION
+            SFBUILDER_VERSION
         );
         wp_enqueue_style('sunformbuilder-style');
         $handles = ['sunformbuilder-style'];
 
-        $css_file = SUN_FORM_BUILDER_CSS_DIR . '/' . $atts['id'] . '.css';
+        $css_file = SFBUILDER_CSS_DIR . '/' . $atts['id'] . '.css';
         if (file_exists($css_file)) {
             $handle_custom = 'sunformbuilder-style-' . $atts['id'];
             wp_register_style(
                 $handle_custom,
-                SUN_FORM_BUILDER_CSS_URL . '/' . $atts['id'] . '.css',
+                SFBUILDER_CSS_URL . '/' . $atts['id'] . '.css',
                 [],
                 filemtime($css_file)
             );
@@ -237,14 +261,14 @@ class Sun_Form_Builder
             'sunformbuilder-gutenberg-editor',
             plugins_url('assets/css/minify/editor.min.css', __FILE__),
             [],
-            SUN_FORM_BUILDER_VERSION
+            SFBUILDER_VERSION
         );
     }
 
     public function SUNFORM_key_settings()
     {
-        register_setting('sun_admin_settings', 'sun_mailchimp_api_key', ['sanitize_callback' => 'sanitize_text_field']);
-        register_setting('sun_admin_settings', 'sun_debug_mode', ['sanitize_callback' => 'sanitize_text_field']);
+        register_setting('sun_admin_settings', 'sfbuilder_mailchimp_api_key', ['sanitize_callback' => 'sanitize_text_field']);
+        register_setting('sun_admin_settings', 'sfbuilder_debug_mode', ['sanitize_callback' => 'sanitize_text_field']);
     }
 
 
@@ -257,7 +281,7 @@ class Sun_Form_Builder
                 'sunformbuilder-submit-js',
                 plugins_url('assets/js/minify/submit.min.js', __FILE__),
                 ['jquery'],
-                SUN_FORM_BUILDER_VERSION
+                SFBUILDER_VERSION
             );
             wp_localize_script(
                 'sunformbuilder-submit-js',
@@ -279,10 +303,10 @@ class Sun_Form_Builder
             }
 
             if (isset($id)) {
-                $version = file_exists(SUN_FORM_BUILDER_CSS_DIR . '/' . $id . '.css') ? filemtime(SUN_FORM_BUILDER_CSS_DIR . '/' . $id . '.css') : time();
+                $version = file_exists(SFBUILDER_CSS_DIR . '/' . $id . '.css') ? filemtime(SFBUILDER_CSS_DIR . '/' . $id . '.css') : time();
                 wp_enqueue_style(
                     'sunformbuilder-style-' . $id,
-                    SUN_FORM_BUILDER_CSS_URL . '/' . $id . '.css',
+                    SFBUILDER_CSS_URL . '/' . $id . '.css',
                     [],
                     $version
                 );
@@ -312,7 +336,7 @@ class Sun_Form_Builder
     public function SUNFORM_admin_script()
     {
         wp_enqueue_style('sunformbuilder-admin-style', plugin_dir_url(__FILE__) . 'assets/css/minify/admin.min.css');
-        wp_enqueue_script('sunformbuilder-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SUN_FORM_BUILDER_VERSION);
+        wp_enqueue_script('sunformbuilder-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SFBUILDER_VERSION);
         wp_localize_script('sunformbuilder-admin', 'sfbuilder_js_data', $this->sfbuilder_js_data);
     }
     public function SUNFORM_register_post_type()

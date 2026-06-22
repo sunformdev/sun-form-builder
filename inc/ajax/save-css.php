@@ -24,12 +24,12 @@ function sunform_save_css()
 
     $css = isset($_POST['css']) ? wp_strip_all_tags(wp_unslash($_POST['css'])) : '';
 
-    if (!file_exists(SUN_FORM_BUILDER_CSS_DIR)) {
-        wp_mkdir_p(SUN_FORM_BUILDER_CSS_DIR);
+    if (!file_exists(SFBUILDER_CSS_DIR)) {
+        wp_mkdir_p(SFBUILDER_CSS_DIR);
     }
 
-    $css_dir   = realpath(SUN_FORM_BUILDER_CSS_DIR);
-    $file_path = trailingslashit(SUN_FORM_BUILDER_CSS_DIR) . $post_id . '.css';
+    $css_dir   = realpath(SFBUILDER_CSS_DIR);
+    $file_path = trailingslashit(SFBUILDER_CSS_DIR) . $post_id . '.css';
 
     // Defense-in-depth: ensure the resolved file path is still inside the
     // configured CSS directory after any symlink/normalization resolution.
