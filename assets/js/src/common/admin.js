@@ -48,7 +48,7 @@ jQuery(function ($) {
         let name = $(this).data('name');
         let value = tdElement.find('[name="'+name+'"]').val();
         let apiData = {
-            action: 'sunform_save_options',
+            action: 'sfbuilder_save_options',
             nonce: sfbuilder_js_data.nonce,
             data: {
                 name: name,

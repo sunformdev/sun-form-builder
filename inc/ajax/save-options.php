@@ -6,7 +6,7 @@ class SUNFORM_Ajax_Plugin_Control
 {
     public function __construct()
     {
-        add_action('wp_ajax_sunform_save_options', [$this, 'sunform_save_options']);
+        add_action('wp_ajax_sfbuilder_save_options', [$this, 'sfbuilder_save_options']);
     }
 
     /**
@@ -18,16 +18,14 @@ class SUNFORM_Ajax_Plugin_Control
     protected function get_allowed_options()
     {
         $defaults = [
-            'sun_mailchimp_api_key',
-            'wpformbuilder_stripe_publishable_key',
-            'wpformbuilder_stripe_secret_key',
-            'sun_debug_mode',
+            'sfbuilder_mailchimp_api_key',
+            'sfbuilder_debug_mode',
         ];
 
-        return apply_filters('sunform_ajax_save_options_whitelist', $defaults);
+        return apply_filters('sunform_ajax_save_options`_whitelist', $defaults);
     }
 
-    public function sunform_save_options()
+    public function sfbuilder_save_options()
     {
         if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'sun_post_nonce')) {
             wp_send_json_error(['message' => 'Nonce verification failed.'], 403);
