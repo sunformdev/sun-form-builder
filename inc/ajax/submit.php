@@ -7,29 +7,21 @@ class SUNFORM_Ajax_Submit_Form extends SUNFORM_Helper
     public function __construct()
     {
         parent::__construct();
-        add_action('wp_ajax_sun_submit_from', [$this, 'sun_submit_from']);
-        add_action('wp_ajax_nopriv_sun_submit_from', [$this, 'sun_submit_from']);
+        add_action('wp_ajax_sun_submit_from', [$this, 'sfbuilder_submit_from']);
+        add_action('wp_ajax_nopriv_sun_submit_from', [$this, 'sfbuilder_submit_from']);
     }
 
-    public function sun_submit_from()
+    public function sfbuilder_submit_from()
     {
         if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'sun_post_nonce')) {
-            //unset(); // Đang ở đây cần xóa bỏ một số ko cần thiết trong forn
-            $form_data = $_POST;
-            //$field_attribute = $_POST['field_attribute'];
             $form_ID = !empty($_POST['formID']) ? sanitize_text_field(wp_unslash($_POST['formID'])) : '';
             $post_form_id = !empty($_POST['post_form_id']) ? sanitize_text_field(wp_unslash($_POST['post_form_id'])) : '';
-            $page_url = !empty($_POST['page_url']) ? sanitize_text_field(wp_unslash($_POST['page_url'])) : '';
-            //echo "<pre>"; var_dump($form_data); die();
+            $page_url = !empty($_POST['page_url']) ? esc_url_raw(wp_unslash($_POST['page_url'])) : '';
 
             $settings = $this->wpformbuilder_get_form_settings($post_form_id, $form_ID);
-            $submit_data = $this->wpformbuilder_get_form_data($settings, $form_data);
+            $submit_data = $this->wpformbuilder_get_form_data($settings, $_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Nonce đã verify ở trên; dữ liệu được unslash + sanitize trong wpformbuilder_get_form_data().
             $action_submit = $settings['action_submit'] ?? ['Email'];
 
-            //echo "<pre>"; var_dump($settings); die('563');
-
-            unset($form_data['action'], $form_data['field_attribute'], $form_data['formID'], $form_data['nonce']); // Xem viết hàm unset 1 lần cho khỏe
-            // Lấy settings từ form
             foreach ($action_submit as $action) {
                 switch ($action) {
                     case 'Email':

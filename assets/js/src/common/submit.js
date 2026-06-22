@@ -15,9 +15,9 @@ jQuery(document).ready(function ($) {
         formData.append('formID', formID);
         formData.append('post_form_id', post_form_id);
         // formData.append('field_attribute', JSON.stringify(fieldAttributes));
-        formData.append('nonce', sun_data.nonce);
+        formData.append('nonce', sfbuilder_js_data.nonce);
         jQuery.ajax({
-            url: sun_data.ajaxurl,
+            url: sfbuilder_js_data.ajaxurl,
             type: 'POST',  // Phương thức POST
             data: formData,  // Dữ liệu gửi đi
             dataType: "json",

@@ -49,13 +49,13 @@ jQuery(function ($) {
         let value = tdElement.find('[name="'+name+'"]').val();
         let apiData = {
             action: 'sunform_save_options',
-            nonce: sun_js_data.nonce,
+            nonce: sfbuilder_js_data.nonce,
             data: {
                 name: name,
                 value: value
             }
         }
-        $.post(sun_js_data.ajaxurl, apiData, function(response){
+        $.post(sfbuilder_js_data.ajaxurl, apiData, function(response){
             that.find('img').removeClass('loading');
             if(hasPreview){
                 that.hide();

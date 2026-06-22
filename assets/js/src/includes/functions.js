@@ -361,21 +361,20 @@ wp.domReady(function () {
         if (isSavingPost && !lastIsSaving && !isAutosavingPost) {
             // ajaxCalled = true;
             const blocks = currentEditor.getBlocks();
-            //console.log('sun_data: ', blocks); // Đang ở đây làm tải css vs js nữa
+           
             blocks.forEach(block => {
                 if (block.name.includes('sunformbuilder/form')) {
                     // console.log('block===> ', block);
                     css += getCssBlock(block);
                 }
             });
-            // console.log('sun_js_data---------->', sun_js_data);
             if (css) {
                 const data = new FormData();
                 data.append('action', 'sunform_save_css');
                 data.append('css', css);
-                data.append('nonce', sun_js_data.nonce);
+                data.append('nonce', sfbuilder_js_data.nonce);
                 data.append('post_id', currentPostId);
-                fetch(sun_data.ajaxurl, {
+                fetch(sfbuilder_js_data.ajaxurl, {
                     method: 'POST',
                     body: data,
                 })

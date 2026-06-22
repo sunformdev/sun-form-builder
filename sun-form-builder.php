@@ -20,10 +20,10 @@ define('SUN_FORM_BUILDER_VERSION', '1.0.0');
 class Sun_Form_Builder
 {
 
-    private $sun_js_data;
+    private $sfbuilder_js_data;
     public function __construct()
     {
-        $this->sun_js_data = [
+        $this->sfbuilder_js_data = [
             'postID' => get_the_ID(),
             'ajaxurl' => admin_url('admin-ajax.php'),
             'admin_email' => get_option('admin_email'),
@@ -109,10 +109,10 @@ class Sun_Form_Builder
 
     public function SUNFORM_load_plugin()
     {
-        $this->sun_js_data['nonce'] = wp_create_nonce('sun_post_nonce');
-        $this->sun_js_data['email_templates'] = $this->SUNFORM_get_email_template();
-        $this->sun_js_data['email_templates_default'] = get_post_meta(254896, '_sun_id_email_template_default', true);
-        $this->sun_js_data['api']['mailchimp'] = !empty(get_option('sun_mailchimp_api_key')) ? true : false;
+        $this->sfbuilder_js_data['nonce'] = wp_create_nonce('sun_post_nonce');
+        $this->sfbuilder_js_data['email_templates'] = $this->SUNFORM_get_email_template();
+        $this->sfbuilder_js_data['email_templates_default'] = get_post_meta(254896, '_sun_id_email_template_default', true);
+        $this->sfbuilder_js_data['api']['mailchimp'] = !empty(get_option('sun_mailchimp_api_key')) ? true : false;
 
         $upload = wp_upload_dir();
         $upload_dir = $upload['basedir'];
@@ -159,8 +159,8 @@ class Sun_Form_Builder
 
         wp_localize_script(
             'sunformbuilder-blocks-js',
-            'sun_data',
-            $this->sun_js_data
+            'sfbuilder_js_data',
+            $this->sfbuilder_js_data
         );
     }
 
@@ -261,8 +261,8 @@ class Sun_Form_Builder
             );
             wp_localize_script(
                 'sunformbuilder-submit-js',
-                'sun_data',
-                $this->sun_js_data
+                'sfbuilder_js_data',
+                $this->sfbuilder_js_data
             );
 
             if (has_shortcode($post_content, 'sun_form')) {
@@ -313,7 +313,7 @@ class Sun_Form_Builder
     {
         wp_enqueue_style('sunformbuilder-admin-style', plugin_dir_url(__FILE__) . 'assets/css/minify/admin.min.css');
         wp_enqueue_script('sunformbuilder-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SUN_FORM_BUILDER_VERSION);
-        wp_localize_script('sunformbuilder-admin', 'sun_js_data', $this->sun_js_data);
+        wp_localize_script('sunformbuilder-admin', 'sfbuilder_js_data', $this->sfbuilder_js_data);
     }
     public function SUNFORM_register_post_type()
     {
@@ -330,7 +330,7 @@ class Sun_Form_Builder
                 'show_in_rest' => true,
                 'show_in_menu' => false,
                 'publicly_queryable' => true,
-                'rewrite' => array('slug' => 'sun-forms'),
+                'rewrite' => array('slug' => 'sunform'),
                 'supports' => array(
                     'title',
                     'editor'

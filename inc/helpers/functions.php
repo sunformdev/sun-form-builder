@@ -53,15 +53,64 @@ class SUNFORM_Helper
         $data = [];
         $fields = !empty($settings['fields']) ? $settings['fields'] : [];
         foreach ($fields as $key => $item) {
-            if (isset($subbmit_data[$item['name']])) {
-                $data[$item['name']] = [
-                    'value' => $subbmit_data[$item['name']],
-                    'label' => $item['label'],
-                    'type' => $item['type']
-                ];
+            $name = isset($item['name']) ? (string) $item['name'] : '';
+            if ($name === '' || !isset($subbmit_data[$name])) {
+                continue;
             }
+            $type = isset($item['type']) ? (string) $item['type'] : 'text';
+            $raw_value = wp_unslash($subbmit_data[$name]); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize ngay bên dưới qua wpformbuilder_sanitize_field_value()
+            $data[$name] = [
+                'value' => $this->wpformbuilder_sanitize_field_value($raw_value, $type),
+                'label' => isset($item['label']) ? sanitize_text_field((string) $item['label']) : '',
+                'type'  => sanitize_key($type),
+            ];
         }
         return $data;
+    }
+
+    /**
+     * Sanitize giá trị của một field theo đúng kiểu khai báo trong form settings.
+     * Tự xử lý đệ quy với mảng (vd: checkbox nhiều giá trị).
+     *
+     * @param mixed  $value Giá trị đã được wp_unslash().
+     * @param string $type  Kiểu field: text, email, url, textarea, number, tel, hidden, password, select, radio, checkbox.
+     * @return mixed
+     */
+    public function wpformbuilder_sanitize_field_value($value, $type = 'text')
+    {
+        if (is_array($value)) {
+            $sanitized = [];
+            foreach ($value as $k => $v) {
+                $sanitized[is_string($k) ? sanitize_text_field($k) : $k] = $this->wpformbuilder_sanitize_field_value($v, $type);
+            }
+            return $sanitized;
+        }
+
+        if (!is_scalar($value)) {
+            return '';
+        }
+
+        $value = (string) $value;
+
+        switch ($type) {
+            case 'email':
+                return sanitize_email($value);
+            case 'url':
+                return esc_url_raw($value);
+            case 'textarea':
+                return sanitize_textarea_field($value);
+            case 'number':
+                return is_numeric($value) ? $value + 0 : sanitize_text_field($value);
+            case 'tel':
+            case 'text':
+            case 'hidden':
+            case 'password':
+            case 'select':
+            case 'radio':
+            case 'checkbox':
+            default:
+                return sanitize_text_field($value);
+        }
     }
 
     public function wpformbuilder_get_content_email_template($id)

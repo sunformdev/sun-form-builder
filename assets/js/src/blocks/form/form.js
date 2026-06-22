@@ -162,7 +162,7 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
 
         const handleSetOpenSection = async (name, toggle = false) => {
             setAttributes({ state: { ...(attributes?.state || {}), section: attributes?.state?.section === name ? '' : name } });
-            if (['mailchimp'].includes(name) && toggle && sun_data?.api?.[name]) {
+            if (['mailchimp'].includes(name) && toggle && sfbuilder_js_data?.api?.[name]) {
                 setSpin({ [name]: true });
                 await WPFormbuilderGetAPIData(name, attributes, setAttributes);
                 setSpin({ [name]: false });
@@ -803,21 +803,21 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
                                                 label="To"
                                                 labelPosition="top"
                                                 help="You can send to multiple emails, separated by commas."
-                                                value={attributes?.action_submit_settings?.email?.to ?? sun_data?.admin_email}
+                                                value={attributes?.action_submit_settings?.email?.to ?? sfbuilder_js_data?.admin_email}
                                                 type="text"
                                                 onChange={(newValue) => handleChangeApiSettings('email', 'to', newValue)}
                                             />
                                             <__experimentalInputControl
                                                 label="Subject"
                                                 labelPosition="top"
-                                                value={attributes?.action_submit_settings?.email?.subject ?? `New message from ${sun_data?.blog_name}`}
+                                                value={attributes?.action_submit_settings?.email?.subject ?? `New message from ${sfbuilder_js_data?.blog_name}`}
                                                 type="text"
                                                 onChange={(newValue) => handleChangeApiSettings('email', 'subject', newValue)}
                                             />
                                             <SelectControl
                                                 label="Email Template"
-                                                value={attributes?.action_submit_settings?.email?.template ?? sun_data?.email_templates_default}
-                                                options={sun_data?.email_templates}
+                                                value={attributes?.action_submit_settings?.email?.template ?? sfbuilder_js_data?.email_templates_default}
+                                                options={sfbuilder_js_data?.email_templates}
                                                 labelPosition="edge"
                                                 className="wpformbuilder-heading-select"
                                                 onChange={(newValue) => handleChangeApiSettings('email', 'template', newValue)}
@@ -825,7 +825,7 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
                                             <__experimentalInputControl
                                                 label="From Email"
                                                 labelPosition="edge"
-                                                value={attributes?.action_submit_settings?.email?.from ?? sun_data?.from_email}
+                                                value={attributes?.action_submit_settings?.email?.from ?? sfbuilder_js_data?.from_email}
                                                 type="text"
                                                 onChange={(newValue) => handleChangeApiSettings('email', 'from', newValue)}
                                                 className='wpformbuilder-width-33'
@@ -833,7 +833,7 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
                                             <__experimentalInputControl
                                                 label="From Name"
                                                 labelPosition="edge"
-                                                value={attributes?.action_submit_settings?.email?.from_name ?? sun_data?.blog_name}
+                                                value={attributes?.action_submit_settings?.email?.from_name ?? sfbuilder_js_data?.blog_name}
                                                 type="text"
                                                 onChange={(newValue) => handleChangeApiSettings('email', 'from_name', newValue)}
                                                 className='wpformbuilder-width-33'
@@ -900,7 +900,7 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
                                                     onChange={(newValue) => handleChangeApiSettings('mailchimp', 'api_key_cusom', newValue)}
                                                 />
                                             )}
-                                            {(sun_data?.api?.mailchimp || attributes?.action_submit_settings?.mailchimp?.api_key_cusom) && (
+                                            {(sfbuilder_js_data?.api?.mailchimp || attributes?.action_submit_settings?.mailchimp?.api_key_cusom) && (
                                                 <>
                                                     <Flex style={{ 'margin-bottom': '13px' }}>
                                                         <FlexItem>
@@ -985,7 +985,7 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
                                                     )}
                                                 </>
                                             )}
-                                            {!sun_data?.api?.mailchimp && attributes?.action_submit_settings?.mailchimp?.type === 'default' && (
+                                            {!sfbuilder_js_data?.api?.mailchimp && attributes?.action_submit_settings?.mailchimp?.type === 'default' && (
                                                 <Notice isDismissible={false} status="warning">Set your Mailchimp API credentials in the Integrations settings. You can also set a different ActiveCampaign API credentials by choosing "Custom".</Notice>
                                             )}
                                         </PanelBody>
