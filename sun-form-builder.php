@@ -22,16 +22,18 @@ if (version_compare(PHP_VERSION, '8.1.0', '<')) {
     add_action('admin_notices', function () {
         $message = sprintf(
             /* translators: 1: required PHP version, 2: current PHP version */
-            esc_html__('Sun Form Builder requires PHP %1$s or higher. You are running PHP %2$s. The plugin has been deactivated.', 'sunformbuilder'),
+            __('Sun Form Builder requires PHP %1$s or higher. You are running PHP %2$s. The plugin has been deactivated.', 'sunformbuilder'),
             '8.1',
             PHP_VERSION
         );
-        echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
+        echo '<div class="notice notice-error"><p>' . esc_html($message) . '</p></div>';
     });
     add_action('admin_init', function () {
         if (is_plugin_active(plugin_basename(__FILE__))) {
             deactivate_plugins(plugin_basename(__FILE__));
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only suppressing the "Plugin activated" admin notice after self-deactivation; no form data is processed.
             if (isset($_GET['activate'])) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Same as above; just unsetting the query var to hide the core notice.
                 unset($_GET['activate']);
             }
         }
@@ -44,9 +46,38 @@ define('SFBUILDER_VERSION', '1.0.0');
 class Sun_Form_Builder
 {
 
+    /**
+     * Singleton instance.
+     *
+     * @var Sun_Form_Builder|null
+     */
+    private static $instance = null;
+
     private $sfbuilder_js_data;
+
+    /**
+     * Returns the single shared instance of the plugin.
+     * Using a singleton guarantees __construct() runs exactly once even if
+     * something (e.g. the activation hook) tries to instantiate the class
+     * again — preventing duplicate hook registrations and the
+     * "Constant ... already defined" warnings reported during activation.
+     */
+    public static function instance()
+    {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function __construct()
     {
+        // Hard guard against multiple instantiations.
+        if (null !== self::$instance) {
+            return;
+        }
+        self::$instance = $this;
+
         $this->sfbuilder_js_data = [
             'postID' => get_the_ID(),
             'ajaxurl' => admin_url('admin-ajax.php'),
@@ -60,7 +91,7 @@ class Sun_Form_Builder
         $upload_dir = $upload['basedir'];
         $upload_dir = $upload_dir . '/sunformbuilder';
 
-        define('SFBUILDER_CSS_DIR', $upload_dir . '/css'); 
+        define('SFBUILDER_CSS_DIR', $upload_dir . '/css');
         define('SFBUILDER_CSS_URL', $upload['baseurl'] . '/sunformbuilder/css');
 
         add_action('init', [$this, 'SUNFORM_register_post_type']);
@@ -119,8 +150,11 @@ class Sun_Form_Builder
 
     public static function activate()
     {
-        $instance = new self();
-        $instance->SUNFORM_register_post_type();
+        // Reuse the singleton instance instead of `new self()`; otherwise the
+        // constructor (and all its `define()` / `add_action()` calls) would
+        // run a second time during activation and emit "Constant ... already
+        // defined" warnings that WordPress reports as unexpected output.
+        self::instance()->SUNFORM_register_post_type();
         flush_rewrite_rules();
     }
 
@@ -166,7 +200,7 @@ class Sun_Form_Builder
             [
                 [
                     'slug' => 'sunformbuilder',
-                    'title' => __('WP Form Builder', 'sunformbuilder'),
+                    'title' => __('Sun Form', 'sunformbuilder'),
                 ],
             ],
             $categories
@@ -178,7 +212,8 @@ class Sun_Form_Builder
             'sunformbuilder-blocks-js',
             plugins_url('assets/js/minify/form.min.js', __FILE__),
             ['wp-blocks', 'wp-element', 'wp-editor'],
-            SFBUILDER_VERSION
+            SFBUILDER_VERSION,
+            true
         );
 
         wp_localize_script(
@@ -281,7 +316,8 @@ class Sun_Form_Builder
                 'sunformbuilder-submit-js',
                 plugins_url('assets/js/minify/submit.min.js', __FILE__),
                 ['jquery'],
-                SFBUILDER_VERSION
+                SFBUILDER_VERSION,
+                true
             );
             wp_localize_script(
                 'sunformbuilder-submit-js',
@@ -335,8 +371,8 @@ class Sun_Form_Builder
 
     public function SUNFORM_admin_script()
     {
-        wp_enqueue_style('sunformbuilder-admin-style', plugin_dir_url(__FILE__) . 'assets/css/minify/admin.min.css');
-        wp_enqueue_script('sunformbuilder-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SFBUILDER_VERSION);
+        wp_enqueue_style('sunformbuilder-admin-style', plugin_dir_url(__FILE__) . 'assets/css/minify/admin.min.css', [], SFBUILDER_VERSION);
+        wp_enqueue_script('sunformbuilder-admin', plugin_dir_url(__FILE__) . 'assets/js/minify/admin.min.js', ['jquery'], SFBUILDER_VERSION, true);
         wp_localize_script('sunformbuilder-admin', 'sfbuilder_js_data', $this->sfbuilder_js_data);
     }
     public function SUNFORM_register_post_type()
@@ -515,4 +551,4 @@ class Sun_Form_Builder
     }
 }
 register_activation_hook(__FILE__, ['Sun_Form_Builder', 'activate']);
-new Sun_Form_Builder();
+Sun_Form_Builder::instance();

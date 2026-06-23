@@ -10,9 +10,11 @@ class SUNFORM_Select_Control extends SUNFORM_Base_Control
     }
     public function get_control_template($attributes)
     {
-        $label = !empty($attributes['label']) ? $attributes['label'] : '';
-        $options = $attributes['options'] ?? [];
+        $label         = !empty($attributes['label']) ? $attributes['label'] : '';
+        $hide_label    = !empty($attributes['hide_label']);
+        $options       = $attributes['options'] ?? [];
         $default_value = !empty($attributes['default_value']) ? $attributes['default_value'] : '';
+
         $select_attributes = [
             'name' => !empty($attributes['name']) ? $attributes['name'] : '',
             'id' => !empty($attributes['id']) ? $attributes['id'] : '',
@@ -30,9 +32,13 @@ class SUNFORM_Select_Control extends SUNFORM_Base_Control
             'data-field-label' => $label
         ];
 
+        $label_html = $hide_label
+            ? ''
+            : "<label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>";
+
         return "
             <div " . $this->get_render_attributes($group_attributes) . ">
-                <label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>
+                " . $label_html . "
                 <div class='wpformbuilder-form-control select'>
                     <select " . $this->get_render_attributes($select_attributes) . ">
                     " . $this->render_options_select($options, $default_value) . "

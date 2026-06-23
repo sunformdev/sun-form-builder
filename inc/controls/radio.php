@@ -10,9 +10,11 @@ class SUNFORM_Radio_Control extends SUNFORM_Base_Control
     }
     public function get_control_template($attributes)
     {
-        $label = !empty($attributes['label']) ? $attributes['label'] : '';
-        $radios = $attributes['options'] ?? [];
+        $label         = !empty($attributes['label']) ? $attributes['label'] : '';
+        $hide_label    = !empty($attributes['hide_label']);
+        $radios        = $attributes['options'] ?? [];
         $default_value = !empty($attributes['default_value']) ? $attributes['default_value'] : '';
+
         $radio_attributes = [
             'type' => 'radio',
             'name' => !empty($attributes['name']) ? $attributes['name'] : '',
@@ -29,9 +31,13 @@ class SUNFORM_Radio_Control extends SUNFORM_Base_Control
             'data-field-label' => $label
         ];
 
+        $label_html = $hide_label
+            ? ''
+            : "<label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>";
+
         return "
             <div " . $this->get_render_attributes($group_attributes) . ">
-                <label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>
+                " . $label_html . "
                 <div class='wpformbuilder-form-control radio'>
                     " . $this->render_radio_items($radios, $default_value, $radio_attributes) . "
                 </div>

@@ -24,6 +24,7 @@ function sunform_render_form_block($attributes)
     $form_post_form     = $attributes['form']['post_form'] ?? '';
     $form_input_size    = $attributes['form']['input_size'] ?? '';
     $form_data          = !empty($attributes['fields']) ? $attributes['fields'] : [];
+    $hide_label         = $attributes['form']['hide_label'] ?? false;
     $html               = '';
 
     if (!empty($form_data)) {
@@ -32,6 +33,7 @@ function sunform_render_form_block($attributes)
         $html .= '<input type="hidden" name="page_url" value="' . esc_url(get_permalink()) . '">';
 
         foreach ($form_data as $key => $item) {
+            $item['hide_label'] = $hide_label;
             $type       = !empty($item['type']) ? $item['type'] : '';
             $class_name = 'SUNFORM_' . ucfirst($type) . '_Control';
             $item['input_size'] = $form_input_size;

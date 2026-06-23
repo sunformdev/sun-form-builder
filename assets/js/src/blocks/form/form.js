@@ -38,7 +38,7 @@ wp.blocks.registerBlockType('sunformbuilder/form', {
     apiVersion: 2,
     title: __('Form'),
     icon: button,
-    category: 'wpformbuilder',
+    category: 'sunformbuilder',
     attributes: attributes,
     edit: (props) => {
         const { attributes, setAttributes } = props;

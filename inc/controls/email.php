@@ -10,7 +10,9 @@ class SUNFORM_Email_Control extends SUNFORM_Base_Control
     }
     public function get_control_template($attributes)
     {
-        $label = !empty($attributes['label']) ? $attributes['label'] : '';
+        $label      = !empty($attributes['label']) ? $attributes['label'] : '';
+        $hide_label = !empty($attributes['hide_label']);
+
         $email_attributes = [
             'type' => 'email',
             'name' => !empty($attributes['name']) ? $attributes['name'] : '',
@@ -30,11 +32,14 @@ class SUNFORM_Email_Control extends SUNFORM_Base_Control
             'class' => 'wpformbuilder-form-group ' . $attributes['id'],
             'data-field-label' => $label
         ];
-        
-        
+
+        $label_html = $hide_label
+            ? ''
+            : "<label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>";
+
         return "
             <div " . $this->get_render_attributes($group_attributes) . ">
-                <label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>
+                " . $label_html . "
                 <div class='wpformbuilder-form-control email'>
                     <input " . $this->get_render_attributes($email_attributes) . ">
                 </div>

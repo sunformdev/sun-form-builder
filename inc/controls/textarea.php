@@ -10,8 +10,10 @@ class SUNFORM_Textarea_Control extends SUNFORM_Base_Control
     }
     public function get_control_template($attributes)
     {
-        $label = !empty($attributes['label']) ? $attributes['label'] : '';
+        $label         = !empty($attributes['label']) ? $attributes['label'] : '';
+        $hide_label    = !empty($attributes['hide_label']);
         $default_value = !empty($attributes['default_value']) ? $attributes['default_value'] : '';
+
         $textarea_attributes = [
             'name' => !empty($attributes['name']) ? $attributes['name'] : '',
             'id' => !empty($attributes['id']) ? $attributes['id'] : '',
@@ -32,9 +34,13 @@ class SUNFORM_Textarea_Control extends SUNFORM_Base_Control
             'data-field-label' => $label
         ];
 
+        $label_html = $hide_label
+            ? ''
+            : "<label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>";
+
         return "
             <div " . $this->get_render_attributes($group_attributes) . ">
-                <label " . $this->get_render_attributes($label_attributes) . ">" . esc_html($label) . "</label>
+                " . $label_html . "
                 <div class='wpformbuilder-form-control textarea'>
                     <textarea " . $this->get_render_attributes($textarea_attributes) . ">" . esc_textarea($default_value) . "</textarea>
                 </div>
